@@ -17,7 +17,7 @@
 package com.netflix.spinnaker.echo.cdevents;
 
 import dev.cdevents.CDEvents;
-import dev.cdevents.events.TaskRunStartedCDEvent;
+import dev.cdevents.events.TaskrunStartedCDEvent;
 import io.cloudevents.CloudEvent;
 import java.net.URI;
 import lombok.Getter;
@@ -36,13 +36,13 @@ public class CDEventTaskRunStarted extends BaseCDEvent {
 
   @Override
   public CloudEvent createCDEvent() {
-    TaskRunStartedCDEvent cdEvent = new TaskRunStartedCDEvent();
+    TaskrunStartedCDEvent cdEvent = new TaskrunStartedCDEvent();
     cdEvent.setSource(URI.create(getSource()));
 
     cdEvent.setSubjectId(getSubjectId());
     cdEvent.setSubjectSource(URI.create(getSubjectSource()));
     cdEvent.setSubjectTaskName(getSubjectTaskName());
-    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()));
+    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
     cdEvent.setSubjectPipelineRunId(getSubjectPipelineRunId());
 
     return CDEvents.cdEventAsCloudEvent(cdEvent);

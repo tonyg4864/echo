@@ -17,9 +17,11 @@
 package com.netflix.spinnaker.echo.cdevents;
 
 import dev.cdevents.CDEvents;
-import dev.cdevents.events.PipelineRunStartedCDEvent;
+import dev.cdevents.events.PipelinerunStartedCDEvent;
 import io.cloudevents.CloudEvent;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.Getter;
 
 public class CDEventPipelineRunStarted extends BaseCDEvent {
@@ -34,12 +36,15 @@ public class CDEventPipelineRunStarted extends BaseCDEvent {
 
   @Override
   public CloudEvent createCDEvent() {
-    PipelineRunStartedCDEvent cdEvent = new PipelineRunStartedCDEvent();
+    PipelinerunStartedCDEvent cdEvent = new PipelinerunStartedCDEvent();
     cdEvent.setSource(URI.create(getSource()));
     cdEvent.setSubjectId(getSubjectId());
     cdEvent.setSubjectSource(URI.create(getSubjectSource()));
     cdEvent.setSubjectPipelineName(getSubjectPipelineName());
-    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()));
+    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
+    Map<String, Object> customData = new HashMap<>();
+    customData.put("deploymentName", "godogclinicf-1-0-0");
+    cdEvent.setCustomData(customData);
 
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }

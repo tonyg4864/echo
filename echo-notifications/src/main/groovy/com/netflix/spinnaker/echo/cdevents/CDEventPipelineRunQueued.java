@@ -16,7 +16,7 @@
 package com.netflix.spinnaker.echo.cdevents;
 
 import dev.cdevents.CDEvents;
-import dev.cdevents.events.PipelineRunQueuedCDEvent;
+import dev.cdevents.events.PipelinerunQueuedCDEvent;
 import io.cloudevents.CloudEvent;
 import java.net.URI;
 import lombok.Getter;
@@ -33,12 +33,12 @@ public class CDEventPipelineRunQueued extends BaseCDEvent {
 
   @Override
   public CloudEvent createCDEvent() {
-    PipelineRunQueuedCDEvent cdEvent = new PipelineRunQueuedCDEvent();
+    PipelinerunQueuedCDEvent cdEvent = new PipelinerunQueuedCDEvent();
     cdEvent.setSource(URI.create(getSource()));
     cdEvent.setSubjectId(getSubjectId());
     cdEvent.setSubjectSource(URI.create(getSubjectSource()));
     cdEvent.setSubjectPipelineName(getSubjectPipelineName());
-    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()));
+    cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
 
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }
