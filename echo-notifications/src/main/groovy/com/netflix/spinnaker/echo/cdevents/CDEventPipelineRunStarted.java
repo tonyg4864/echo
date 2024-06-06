@@ -20,18 +20,28 @@ import dev.cdevents.CDEvents;
 import dev.cdevents.events.PipelinerunStartedCDEvent;
 import io.cloudevents.CloudEvent;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.Getter;
 
 public class CDEventPipelineRunStarted extends BaseCDEvent {
 
   @Getter private String subjectPipelineName;
+  @Getter private Object customData;
 
   public CDEventPipelineRunStarted(
       String executionId, String executionUrl, String executionName, String spinnakerUrl) {
     super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
     this.subjectPipelineName = executionName;
+  }
+
+  public CDEventPipelineRunStarted(
+      String executionId,
+      String executionUrl,
+      String executionName,
+      String spinnakerUrl,
+      Object customData) {
+    super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
+    this.subjectPipelineName = executionName;
+    this.customData = customData;
   }
 
   @Override
@@ -42,8 +52,6 @@ public class CDEventPipelineRunStarted extends BaseCDEvent {
     cdEvent.setSubjectSource(URI.create(getSubjectSource()));
     cdEvent.setSubjectPipelineName(getSubjectPipelineName());
     cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
-    Map<String, Object> customData = new HashMap<>();
-    customData.put("deploymentName", "godogclinicf-1-0-0");
     cdEvent.setCustomData(customData);
 
     return CDEvents.cdEventAsCloudEvent(cdEvent);

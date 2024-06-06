@@ -49,8 +49,6 @@ public class CDEventsNotificationAgent extends AbstractEventNotificationAgent {
       Event event,
       Map<String, String> config,
       String status) {
-    log.info("Sending CDEvents notification..");
-    log.info("DEBUG: Tony Test D");
 
     String executionId =
         Optional.ofNullable(event.content)

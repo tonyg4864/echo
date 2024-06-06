@@ -71,6 +71,13 @@ public class CDEventsBuilderService {
         Optional.ofNullable(preference)
             .map(p -> (String) p.get("cdEventsType"))
             .orElseThrow(() -> new FieldNotFoundException("notifications.cdEventsType"));
+
+    Object customData =
+        Optional.ofNullable(event.content)
+            .map(e -> (Map) e.get("context"))
+            .map(e -> e.get("customData"))
+            .orElse(new Object());
+
     log.info("Event type {} received to create CDEvent.", cdEventsType);
     // This map will be updated to add more event types that Spinnaker needs to send
     Map<String, BaseCDEvent> cdEventsMap =
@@ -80,7 +87,7 @@ public class CDEventsBuilderService {
                     executionId, executionUrl, executionName, spinnakerUrl),
             CDEventTypes.PipelineRunStartedEvent.getEventType(),
                 new CDEventPipelineRunStarted(
-                    executionId, executionUrl, executionName, spinnakerUrl),
+                    executionId, executionUrl, executionName, spinnakerUrl, customData),
             CDEventTypes.PipelineRunFinishedEvent.getEventType(),
                 new CDEventPipelineRunFinished(
                     executionId, executionUrl, executionName, spinnakerUrl, status),
