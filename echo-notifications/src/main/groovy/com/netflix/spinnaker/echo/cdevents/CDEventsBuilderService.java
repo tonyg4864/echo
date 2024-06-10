@@ -84,18 +84,19 @@ public class CDEventsBuilderService {
         Map.of(
             CDEventTypes.PipelineRunQueuedEvent.getEventType(),
                 new CDEventPipelineRunQueued(
-                    executionId, executionUrl, executionName, spinnakerUrl),
+                    executionId, executionUrl, executionName, spinnakerUrl, customData),
             CDEventTypes.PipelineRunStartedEvent.getEventType(),
                 new CDEventPipelineRunStarted(
                     executionId, executionUrl, executionName, spinnakerUrl, customData),
             CDEventTypes.PipelineRunFinishedEvent.getEventType(),
                 new CDEventPipelineRunFinished(
-                    executionId, executionUrl, executionName, spinnakerUrl, status),
+                    executionId, executionUrl, executionName, spinnakerUrl, status, customData),
             CDEventTypes.TaskRunStartedEvent.getEventType(),
-                new CDEventTaskRunStarted(executionId, executionUrl, executionName, spinnakerUrl),
+                new CDEventTaskRunStarted(
+                    executionId, executionUrl, executionName, spinnakerUrl, customData),
             CDEventTypes.TaskRunFinishedEvent.getEventType(),
                 new CDEventTaskRunFinished(
-                    executionId, executionUrl, executionName, spinnakerUrl, status));
+                    executionId, executionUrl, executionName, spinnakerUrl, status, customData));
 
     BaseCDEvent cdEvent =
         cdEventsMap.keySet().stream()

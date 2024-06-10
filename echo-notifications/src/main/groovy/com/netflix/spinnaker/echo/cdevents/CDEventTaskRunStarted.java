@@ -26,12 +26,18 @@ public class CDEventTaskRunStarted extends BaseCDEvent {
 
   @Getter private String subjectTaskName;
   @Getter private String subjectPipelineRunId;
+  @Getter private Object customData;
 
   public CDEventTaskRunStarted(
-      String executionId, String executionUrl, String executionName, String spinnakerUrl) {
+      String executionId,
+      String executionUrl,
+      String executionName,
+      String spinnakerUrl,
+      Object customData) {
     super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
     this.subjectTaskName = executionName;
     this.subjectPipelineRunId = executionId;
+    this.customData = customData;
   }
 
   @Override
@@ -44,6 +50,7 @@ public class CDEventTaskRunStarted extends BaseCDEvent {
     cdEvent.setSubjectTaskName(getSubjectTaskName());
     cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
     cdEvent.setSubjectPipelineRunId(getSubjectPipelineRunId());
+    cdEvent.setCustomData(customData);
 
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }

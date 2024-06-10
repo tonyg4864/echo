@@ -27,16 +27,19 @@ public class CDEventPipelineRunFinished extends BaseCDEvent {
 
   @Getter private String subjectPipelineName;
   @Getter private String subjectError;
+  @Getter private Object customData;
 
   public CDEventPipelineRunFinished(
       String executionId,
       String executionUrl,
       String executionName,
       String spinnakerUrl,
-      String status) {
+      String status,
+      Object customData) {
     super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
     this.subjectPipelineName = executionName;
     this.subjectError = status;
+    this.customData = customData;
   }
 
   @Override
@@ -54,7 +57,7 @@ public class CDEventPipelineRunFinished extends BaseCDEvent {
     } else if ("failed".equals(getSubjectError())) {
       cdEvent.setSubjectOutcome(CDEventConstants.Outcome.FAILURE.getOutcome());
     }
-
+    cdEvent.setCustomData(customData);
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }
 }

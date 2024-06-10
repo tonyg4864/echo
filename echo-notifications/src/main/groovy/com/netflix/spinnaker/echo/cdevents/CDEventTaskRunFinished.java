@@ -28,17 +28,20 @@ public class CDEventTaskRunFinished extends BaseCDEvent {
   @Getter private String subjectTaskName;
   @Getter private String subjectPipelineRunId;
   @Getter private String subjectError;
+  @Getter private Object customData;
 
   public CDEventTaskRunFinished(
       String executionId,
       String executionUrl,
       String executionName,
       String spinnakerUrl,
-      String status) {
+      String status,
+      Object customData) {
     super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
     this.subjectTaskName = executionName;
     this.subjectPipelineRunId = executionId;
     this.subjectError = status;
+    this.customData = customData;
   }
 
   @Override
@@ -56,7 +59,7 @@ public class CDEventTaskRunFinished extends BaseCDEvent {
     } else if ("failed".equals(getSubjectError())) {
       cdEvent.setSubjectOutcome(CDEventConstants.Outcome.FAILURE.getOutcome());
     }
-
+    cdEvent.setCustomData(customData);
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }
 }

@@ -28,12 +28,6 @@ public class CDEventPipelineRunStarted extends BaseCDEvent {
   @Getter private Object customData;
 
   public CDEventPipelineRunStarted(
-      String executionId, String executionUrl, String executionName, String spinnakerUrl) {
-    super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
-    this.subjectPipelineName = executionName;
-  }
-
-  public CDEventPipelineRunStarted(
       String executionId,
       String executionUrl,
       String executionName,

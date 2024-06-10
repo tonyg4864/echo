@@ -24,11 +24,17 @@ import lombok.Getter;
 public class CDEventPipelineRunQueued extends BaseCDEvent {
 
   @Getter private String subjectPipelineName;
+  @Getter private Object customData;
 
   public CDEventPipelineRunQueued(
-      String executionId, String executionUrl, String executionName, String spinnakerUrl) {
+      String executionId,
+      String executionUrl,
+      String executionName,
+      String spinnakerUrl,
+      Object customData) {
     super(spinnakerUrl, executionId, spinnakerUrl, executionUrl);
     this.subjectPipelineName = executionName;
+    this.customData = customData;
   }
 
   @Override
@@ -39,7 +45,7 @@ public class CDEventPipelineRunQueued extends BaseCDEvent {
     cdEvent.setSubjectSource(URI.create(getSubjectSource()));
     cdEvent.setSubjectPipelineName(getSubjectPipelineName());
     cdEvent.setSubjectUrl(URI.create(getSubjectUrl()).toString());
-
+    cdEvent.setCustomData(customData);
     return CDEvents.cdEventAsCloudEvent(cdEvent);
   }
 }
