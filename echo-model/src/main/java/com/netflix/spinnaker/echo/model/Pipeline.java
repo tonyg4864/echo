@@ -93,6 +93,8 @@ public class Pipeline {
 
   Trigger trigger;
 
+  @JsonProperty Object metadata;
+
   @JsonPOJOBuilder(withPrefix = "")
   public static final class PipelineBuilder {
     @JsonProperty("config")
