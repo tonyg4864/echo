@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import retrofit.RequestInterceptor;
@@ -36,7 +37,8 @@ public class CDEventsSenderService {
   private Client retrofitClient;
   private RestAdapter.LogLevel retrofitLogLevel;
 
-  public CDEventsSenderService(Client retrofitClient, RestAdapter.LogLevel retrofitLogLevel) {
+  public CDEventsSenderService(
+      @Qualifier("customOk3Client") Client retrofitClient, RestAdapter.LogLevel retrofitLogLevel) {
     this.retrofitClient = retrofitClient;
     this.retrofitLogLevel = retrofitLogLevel;
   }

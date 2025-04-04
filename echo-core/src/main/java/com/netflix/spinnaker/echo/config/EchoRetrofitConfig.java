@@ -18,14 +18,23 @@ package com.netflix.spinnaker.echo.config;
 
 import com.jakewharton.retrofit.Ok3Client;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @Slf4j
 public class EchoRetrofitConfig {
   @Bean
+  @Primary
   public Ok3Client ok3Client() {
     return new Ok3Client();
+  }
+
+  @Bean
+  public Ok3Client customOk3Client() {
+    OkHttpClient customClient = CustomOkHttpClient.create();
+    return new Ok3Client(customClient);
   }
 }
